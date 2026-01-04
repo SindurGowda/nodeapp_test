@@ -41,7 +41,6 @@ jobs:
     needs: push_to_registry
     environment:
       name: deployment
-      url: ${{ secrets.APP_URL }}
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v0.1.7
