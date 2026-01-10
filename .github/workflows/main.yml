@@ -14,21 +14,15 @@ jobs:
         uses: actions/checkout@v4
 
       # 🔍 SonarCloud Scan (NON-BLOCKING)
-      - name: SonarCloud Scan
-        continue-on-error: true
+      - name: SonarCloud Scan & Quality Gate
         uses: SonarSource/sonarcloud-github-action@v2
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        continue-on-error: true   # ← here
         with:
           organization: ${{ secrets.SONAR_ORG }}
           projectKey: ${{ secrets.SONAR_PROJECT_KEY }}
+          token: ${{ secrets.SONAR_TOKEN }}
+          waitForQualityGate: true
 
-      # 🚦 Quality Gate (NON-BLOCKING)
-      - name: SonarCloud Quality Gate
-        continue-on-error: true
-        uses: SonarSource/sonarcloud-quality-gate-action@v1
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       # 🔐 Docker Login
       - name: Log in to Docker Hub
