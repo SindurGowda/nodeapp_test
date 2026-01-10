@@ -31,7 +31,13 @@ jobs:
             -Dsonar.qualitygate.wait=true
             "
 
-
+      # 🔐 Azure Login via OIDC (NO SECRETS)
+      - name: Azure Login (OIDC)
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       # 🔐 Log in to Azure Container Registry
       - name: Log in to ACR
@@ -49,7 +55,7 @@ jobs:
           push: true
           tags: |
             ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_IMAGE_NAME }}:dev
-            ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_IMAGE_NAME }}:${{ github.sha }}
+          
 
 
 
