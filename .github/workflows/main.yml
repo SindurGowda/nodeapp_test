@@ -16,12 +16,21 @@ jobs:
       # 🔍 SonarCloud Scan (NON-BLOCKING)
       - name: SonarCloud Scan & Quality Gate
         uses: SonarSource/sonarcloud-github-action@v2
-        continue-on-error: true   # ← here
+        continue-on-error: true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          organization: ${{ secrets.SONAR_ORG }}
-          projectKey: ${{ secrets.SONAR_PROJECT_KEY }}
-          token: ${{ secrets.SONAR_TOKEN }}
-          waitForQualityGate: true
+          entryPoint: bash
+          args: >
+            -c "
+            sonar-scanner \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+            -Dsonar.organization=${{ secrets.SONAR_ORG }} \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.qualitygate.wait=true
+            "
+
 
 
       # 🔐 Docker Login
