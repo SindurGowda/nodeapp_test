@@ -5,6 +5,10 @@ on:
     branches: ['master']
   pull_request:
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   push_to_registry:
     runs-on: ubuntu-latest
