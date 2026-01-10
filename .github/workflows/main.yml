@@ -54,7 +54,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_IMAGE_NAME }}:dev
+            ${{ secrets.ACR_LOGIN_SERVER }}/${{ secrets.ACR_IMAGE_NAME }}:PROD
           
 
 
